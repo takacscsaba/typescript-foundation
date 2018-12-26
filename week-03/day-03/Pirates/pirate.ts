@@ -1,23 +1,26 @@
 export class Pirate {
+  name: string;
   intoxication: number = 0;
   isPassedOut: boolean = false;
   isDead: boolean = false;
   isCaptain: boolean;
 
-  constructor(isCaptain: boolean) {
+  constructor(name: string, isCaptain: boolean) {
+    this.name = name;
     this.isCaptain = isCaptain;
   }
 
   public drinkSomeRum() {
-    if (this.isDead = false) {
+    if (!this.isDead) {
       this.intoxication++;
     } else {
-      console.log("He's dead");
+      this.isDead;
+      console.log(`${this.name} is dead from intoxication.`);
     }
   }
 
   public howsItGoingMate() {
-    if (this.isDead = false) {
+    if (!this.isDead) {
       if (this.intoxication < 5) {
         console.log("Pour me anudder!");
       } else {
@@ -25,7 +28,7 @@ export class Pirate {
         this.isPassedOut = true;
       }
     } else {
-      console.log("He's dead");
+      console.log(`${this.name} is dead.`);
     }
   }
 

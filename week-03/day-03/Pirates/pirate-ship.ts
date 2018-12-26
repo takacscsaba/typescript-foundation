@@ -10,11 +10,11 @@ export class PirateShip {
   }
 
   public fillShip() {
-    this.captain = new Pirate(true);
+    this.captain = new Pirate(`Captain ${this.name}`, true);
     let randomNum = Math.floor(Math.random() * Math.floor(9)) + 1;
     this.pirateCrew = [];
     for (let i = 0; i <= randomNum; i++) {
-      this.pirateCrew.push(new Pirate(false));
+      this.pirateCrew.push(new Pirate(`${this.name} Pirate number #${i + 1}`, false));
     }
   }
 
@@ -23,11 +23,11 @@ export class PirateShip {
       console.log(`The ${this.name} ship has no captain nor crew.`)
     } else {
         if (this.captain.isDead) {
-          console.log(`The ${this.name} ship's captain is dead, he consumed ${this.captain.intoxication} rum.`)
+          console.log(`${this.captain.name} is dead, he consumed ${this.captain.intoxication} rum.`)
         } else if (this.captain.isPassedOut) {
-          console.log(`The ${this.name} ship's captain has passed out, he consumed ${this.captain.intoxication} rum.`)
+          console.log(`${this.captain.name} has passed out, he consumed ${this.captain.intoxication} rum.`)
         } else {
-          console.log(`The ${this.name} ship's captain is alive, and he consumed ${this.captain.intoxication} rum.`)
+          console.log(`${this.captain.name} is alive, and he consumed ${this.captain.intoxication} rum.`)
         }
   
         let alivePirateNum: number = this.alivePirateCounter();
@@ -58,7 +58,7 @@ export class PirateShip {
 
   public killingPirates() {
     let randomNumDeath: number =  Math.floor(Math.random() * Math.floor(this.pirateCrew.length));
-    for (let i = 0; i < randomNumDeath; i++) {
+    for (let i = 0; i < randomNumDeath + 1; i++) {
       this.pirateCrew[i].die();
     }
   }
@@ -69,9 +69,9 @@ export class PirateShip {
       this.captain.drinkSomeRum();
     }
 
-    let randomRumCrew: number =  Math.floor(Math.random() * Math.floor(3));
-    for (let i = 0; i <= this.pirateCrew.length; i++) {
-      for (let j = 0; j <= randomRumCrew; j++) {
+    let alivePirates: number = this.alivePirateCounter();
+    for (let i = 0; i < alivePirates; i++) {
+      for (let j = 0; j <= Math.floor(Math.random() * Math.floor(2)); j++) {
         this.pirateCrew[i].drinkSomeRum();
       }
     }
