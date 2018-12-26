@@ -14,7 +14,7 @@ export class PirateShip {
     let randomNum = Math.floor(Math.random() * Math.floor(9)) + 1;
     this.pirateCrew = [];
     for (let i = 0; i <= randomNum; i++) {
-      this.pirateCrew.push(new Pirate(`${this.name} Pirate number #${i + 1}`, false));
+      this.pirateCrew.push(new Pirate(`${this.name} Pirate #${i + 1}`, false));
     }
   }
 
@@ -31,7 +31,9 @@ export class PirateShip {
         }
   
         let alivePirateNum: number = this.alivePirateCounter();
-        console.log(`Out of ${this.pirateCrew.length} pirates, ${alivePirateNum} are still alive.`)
+        let drunkPirateNum: number = this.drunkPirateCounter();
+        let deadPirateNum: number = this.deadPirateCounter();
+        console.log(`Out of ${this.pirateCrew.length} pirates, ${alivePirateNum} can work, ${drunkPirateNum} are drunk, ${deadPirateNum} are dead.`)
     }
   }
 
@@ -40,20 +42,38 @@ export class PirateShip {
     let scoreOtherShip: number = otherShip.alivePirateCounter() - otherShip.captain.intoxication;
 
     if (scoreShip > scoreOtherShip) {
-      otherShip.killingPirates();
-      this.winningParty();
+      this.battleResolutions(this, otherShip);
       return true;
     } else {
-      this.killingPirates();
-      otherShip.winningParty();
+      this.battleResolutions(otherShip, this);
       return false;
     }
   }
 
+  public battleResolutions(winnerShip: PirateShip, loserShip: PirateShip) {
+    loserShip.killingPirates();
+    loserShip.wakingPirates();
+
+    winnerShip.winningParty();
+    winnerShip.wakingPirates();
+  }
+
   public alivePirateCounter(): number {
     let alivePirateNum: number = 0;
-    this.pirateCrew.forEach(x => x.isDead ? 0 : alivePirateNum++);
+    this.pirateCrew.forEach(x => x.isDead || x.isPassedOut ? 0 : alivePirateNum++);
     return alivePirateNum;
+  }
+
+  public drunkPirateCounter(): number {
+    let drunkPirateNum: number = 0;
+    this.pirateCrew.forEach(x => x.isPassedOut ? drunkPirateNum++ : 0);
+    return drunkPirateNum;
+  }
+
+  public deadPirateCounter() {
+    let deadPirateNum: number = 0;
+    this.pirateCrew.forEach(x => x.isDead ? deadPirateNum++ : 0);
+    return deadPirateNum;
   }
 
   public killingPirates() {
@@ -61,6 +81,10 @@ export class PirateShip {
     for (let i = 0; i < randomNumDeath + 1; i++) {
       this.pirateCrew[i].die();
     }
+  }
+
+  public wakingPirates() {
+    this.pirateCrew.forEach(x => x.isPassedOut ? x.wakeUpPirate() : 0);
   }
 
   public winningParty() {
