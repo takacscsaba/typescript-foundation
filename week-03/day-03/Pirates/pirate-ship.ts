@@ -12,24 +12,27 @@ export class PirateShip {
   public fillShip() {
     this.captain = new Pirate(true);
     let randomNum = Math.floor(Math.random() * Math.floor(9)) + 1;
-
+    this.pirateCrew = [];
     for (let i = 0; i <= randomNum; i++) {
       this.pirateCrew.push(new Pirate(false));
     }
   }
 
   public shipInformations() {
-    if (this.captain.isDead) {
-      console.log(`The captain is dead, he consumed ${this.captain.intoxication} rum.`)
-    } else if (this.captain.isPassedOut) {
-      console.log(`The captain has passed out,  he consumed ${this.captain.intoxication} rum.`)
+    if (this.captain == undefined) {
+      console.log(`The ${this.name} ship has no captain nor crew.`)
     } else {
-      console.log(`The captain is alive, and he consumed ${this.captain.intoxication} rum.`)
+        if (this.captain.isDead) {
+          console.log(`The ${this.name} ship's captain is dead, he consumed ${this.captain.intoxication} rum.`)
+        } else if (this.captain.isPassedOut) {
+          console.log(`The ${this.name} ship's captain has passed out, he consumed ${this.captain.intoxication} rum.`)
+        } else {
+          console.log(`The ${this.name} ship's captain is alive, and he consumed ${this.captain.intoxication} rum.`)
+        }
+  
+        let alivePirateNum: number = this.alivePirateCounter();
+        console.log(`Out of ${this.pirateCrew.length} pirates, ${alivePirateNum} are still alive.`)
     }
-
-    let alivePirateNum: number = this.alivePirateCounter();
-    this.pirateCrew.forEach(x => x.isDead ? 0 : alivePirateNum++);
-    console.log(`Out of ${this.pirateCrew.length} pirates, ${alivePirateNum} are still alive.`)
   }
 
   public battle(otherShip: PirateShip): boolean {
