@@ -15,7 +15,7 @@ export class Student extends Person {
   }
 
   public getGoal(){
-    console.log("Be a junior software developer.");
+    console.log("My goal is: Be a junior software developer.");
   }
 
   public skipDays(numberOfDays: number) {

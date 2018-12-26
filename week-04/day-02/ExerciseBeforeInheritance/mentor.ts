@@ -13,6 +13,6 @@ export class Mentor extends Person {
   }
 
   public getGoal() {
-    console.log("Educate brilliant junior software developers.");
+    console.log("My goal is: Educate brilliant junior software developers.");
   }
 }

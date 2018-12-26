@@ -12,11 +12,11 @@ export class Sponsor extends Person {
   }
 
   public introduce() {
-    console.log(`Hi, I'm ${this.name}, a ${this.age} year old ${this.gender} who represents ${this.company} and hired ${this.hiredStudents} students so far`);
+    console.log(`Hi, I'm ${this.name}, a ${this.age} year old ${this.gender} who represents ${this.company} and hired ${this.hiredStudents} students so far.`);
   }
 
   public getGoal() {
-    console.log("Hire brilliant junior software developers.");
+    console.log("My goal is: Hire brilliant junior software developers.");
   }
 
   public hire() {
