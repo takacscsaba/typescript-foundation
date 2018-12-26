@@ -13,18 +13,18 @@ export class Pirate {
   public drinkSomeRum() {
     if (!this.isDead && this.intoxication <= 2) {
       this.intoxication++;
-      console.log(`${this.name} has drunk some rum.`);
+      //console.log(`${this.name} has drunk some rum.`);
     } else if (this.intoxication > 2) {
       this.isPassedOut = true;
-      console.log(`${this.name} has passed out, therefore he can't drink any more.`);
+      //console.log(`${this.name} has passed out, therefore he can't drink any more.`);
     } else {
-      console.log(`${this.name} is dead, therefore he can't drink any more.`);
+      //console.log(`${this.name} is dead, therefore he can't drink any more.`);
     }
   }
 
   public howsItGoingMate() {
     if (!this.isDead) {
-      if (this.intoxication < 4) {
+      if (this.intoxication < 2) {
         console.log("Pour me anudder!");
       } else {
         console.log("Arghh, I'ma Pirate. How d'ya d'ink its goin?");
