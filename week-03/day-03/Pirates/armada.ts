@@ -3,27 +3,29 @@ import { PirateShip } from "./pirate-ship";
 export class Armada {
   name: string;
   fleet: PirateShip[];
-  warWon: number;
+  warWon: number = 0;
 
   constructor(name: string) {
     this.name = name;
   }
 
-  public shipInformations() {
+  public armadaInformations() {
     if (this.fleet == undefined) {
-      console.log(`${this.name} armada hasn\'t recruited ships yet into its fleet.`)
+      console.log(`${this.name} armada hasn\'t recruited ships into its fleet yet.`)
     } else {
       let fleetStats: number[] = this.pirateStatCounter();
-      console.log(`${this.name} armada contains ${this.fleet,length}, and won ${this.warWon} wars.`);
-      console.log(`Crew: ${fleetStats[0]}, Can work: ${fleetStats[1]}, Drunk: ${fleetStats[2]}, Dead: ${fleetStats[3]}`);
+      console.log(`${this.name} armada contains ${this.fleet.length} ships, and won ${this.warWon} wars.`);
+      console.log(`Crew: ${fleetStats[0]},  Can work: ${fleetStats[1]}, Drunk: ${fleetStats[2]},  Dead: ${fleetStats[3]}`);
     }
   }
 
   public fillArmada() {
     //let randomNum = Math.floor(Math.random() * Math.floor(9)) + 1;
     this.fleet = [];
-    for (let i = 0; i <= 5; i++) {
-      this.fleet.push(new PirateShip(`${this.name} Ship #${i + 1}`));
+    for (let i = 0; i < 5; i++) {
+      let pirateShip: PirateShip = new PirateShip(`${this.name} Ship #${i + 1}`);
+      pirateShip.fillShip();
+      this.fleet.push(pirateShip);
     }
   }
 
