@@ -1,7 +1,39 @@
 import { Plant } from "./plant";
+import { Flower } from "./flower";
+import { Tree } from "./tree";
 
 export class Garden {
   plants: Plant[];
+
+  constructor() {
+  }
+
+  public wateringGarden(waterAmount: number) {
+    console.log(`Watering with ${waterAmount}`)
+    let plantsToWaterNum: number = 0;
+    this.plants.forEach(plant => plant.needsWatering ? plantsToWaterNum++ : 0);
+    this.plants.forEach(plant => plant.needsWatering ? plant.watering(waterAmount / plantsToWaterNum) : 0);
+  }
+
+  public infoGarden() {
+    this.plants.forEach(plant => plant.needsWatering ? console.log(`The ${plant.color} ${plant.type} needs water`) : console.log(`The ${plant.color} ${plant.type} doesn't need water`));
+  }
+
+  public fillGarden() {
+    this.plants = [];
+    this.plants.push(new Flower('yellow'), new Flower('blue'), new Tree('purple'), new Tree('orange'));
+  }
 }
-    // when watering it should only water those what needs water with equally divided amount amongst them
-    // eg. watering with 40 and 4 of them need water then each gets watered with 10
+
+const garden = new Garden();
+
+garden.fillGarden();
+garden.infoGarden();
+console.log('');
+
+garden.wateringGarden(40);
+garden.infoGarden();
+console.log('');
+
+garden.wateringGarden(70);
+garden.infoGarden();

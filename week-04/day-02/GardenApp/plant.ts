@@ -1,6 +1,8 @@
 export abstract class Plant {
   color: string;
-  waterAmount: number;
+  type: string;
+  waterAmount: number = 0;
+  needsWatering: boolean = true;
 
-  abstract watering();
+  abstract watering(waterAmount: number);
 }
