@@ -16,7 +16,7 @@ export class Garden {
   }
 
   public infoGarden() {
-    this.plants.forEach(plant => plant.needsWatering ? console.log(`The ${plant.color} ${plant.type} needs water`) : console.log(`The ${plant.color} ${plant.type} doesn't need water`));
+    this.plants.forEach(plant => plant.needsWatering ? console.log(`The ${plant.color} ${plant instanceof Flower ? 'Flower' : 'Tree'} needs water`) : console.log(`The ${plant.color} ${plant instanceof Flower ? 'Flower' : 'Tree'} doesn't need water`));
   }
 
   public fillGarden() {

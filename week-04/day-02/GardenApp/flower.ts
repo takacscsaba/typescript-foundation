@@ -4,7 +4,6 @@ export class Flower extends Plant {
   constructor(color: string) {
     super();
     this.color = color;
-    this.type = "Flower";
   }
 
   watering(waterAmount: number) {
