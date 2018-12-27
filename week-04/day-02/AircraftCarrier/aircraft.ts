@@ -1,6 +1,3 @@
-import { F16 } from "./f16";
-import { F35 } from "./f35";
-
 export class Aircraft {
   type: string;
   maxAmmo: number;
