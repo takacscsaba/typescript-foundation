@@ -5,9 +5,9 @@ console.log('Input params are', args);
 const functionsObj = new Functions();
 
 if (args.length == 0) {
-  console.log(functionsObj.printInformations());
+  functionsObj.printInformations();
 } else if (args[0] == '-l') {
-  
+  functionsObj.printTasks();
 } else if (args[0] == '-a') {
   
 } else if (args[0] == '-r') {
