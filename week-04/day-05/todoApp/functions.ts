@@ -6,6 +6,8 @@ const taskText = "todo_tasks.txt";
 const commandsText = "commands_information.txt";
 
 export class Functions {
+  taskList: Task[] = this.createTaskObjectsFromFile();
+
   printInformations() {
     try {
       console.log(fs.readFileSync(commandsText, charEndcoding));
@@ -15,10 +17,8 @@ export class Functions {
   }
 
   printTasks() {
-    let taskList = this.createTaskObjectsFromFile();
-
-    if (!isNaN(taskList[0].id)) {
-      taskList.forEach(task => console.log(task.toString()));
+    if (!isNaN(this.taskList[0].id)) {
+      this.taskList.forEach(task => console.log(task.toString()));
     } else {
       console.log('No todos for today! :)');
     }
@@ -29,30 +29,27 @@ export class Functions {
       args.shift();
       let taskDescreption = args.join(' ');
       
-      let taskList: Task[] = this.createTaskObjectsFromFile();
-      let newTask: Task = this.createTaskObjectFromArg(taskList.length, taskDescreption)
-      taskList.push(newTask);
+      let newTask: Task = this.createTaskObjectFromArg(this.taskList.length, taskDescreption)
+      this.taskList.push(newTask);
 
       console.log(`NEW TASK ADDED: ${newTask.toString()}`);
 
-      this.writeTasksIntoFile(taskList);
+      this.writeTasksIntoFile(this.taskList);
     } else {
       console.error('Unable to add: no task provided')
     }
   }
   
   removeTask(args: string[]) {
-    let taskList: Task[] = this.createTaskObjectsFromFile();
-
     if (args.length != 2) {
       console.error('Unable to remove: none or too many index provided');
     } else if (isNaN(parseInt(args[1]))) {
       console.error('Unable to remove: index is not a number');
-    } else if (parseInt(args[1]) > taskList.length) {
+    } else if (parseInt(args[1]) > this.taskList.length) {
       console.error('Unable to remove: index is out of bound');
     } else {
-      taskList = this.removeCertainTask(parseInt(args[1]), taskList);
-      this.writeTasksIntoFile(taskList);
+      this.taskList = this.removeCertainTask(parseInt(args[1]), this.taskList);
+      this.writeTasksIntoFile(this.taskList);
     }
   }
 
