@@ -32,8 +32,6 @@ export class Functions {
       let newTask: Task = this.createTaskObjectFromArg(this.taskList.length, taskDescreption)
       this.taskList.push(newTask);
 
-      console.log(`NEW TASK ADDED: ${newTask.toString()}`);
-
       this.writeTasksIntoFile(this.taskList);
     } else {
       console.error('Unable to add: no task provided')
@@ -41,14 +39,19 @@ export class Functions {
   }
   
   removeTask(args: string[]) {
-    if (args.length != 2) {
-      console.error('Unable to remove: none or too many index provided');
-    } else if (isNaN(parseInt(args[1]))) {
-      console.error('Unable to remove: index is not a number');
-    } else if (parseInt(args[1]) > this.taskList.length) {
-      console.error('Unable to remove: index is out of bound');
-    } else {
+    let areArgsValid: boolean = this.checkIfArgsAreValid(args);
+
+    if (areArgsValid) {
       this.taskList = this.removeCertainTask(parseInt(args[1]), this.taskList);
+      this.writeTasksIntoFile(this.taskList);
+    }
+  }
+
+  finishorUnfinishTask(args: string[]) {
+    let areArgsValid: boolean = this.checkIfArgsAreValid(args);
+
+    if (areArgsValid) {
+      this.taskList = this.changeTaskIsCompletedStatus(parseInt(args[1]), this.taskList);
       this.writeTasksIntoFile(this.taskList);
     }
   }
@@ -85,7 +88,10 @@ export class Functions {
   }
 
   createTaskObjectFromArg(idNum: number, taskDescreption: string): Task {
-    return new Task(idNum + 1, false, taskDescreption);
+    let newTask = new Task(idNum + 1, false, taskDescreption)
+
+    console.log(`NEW TASK ADDED: ${newTask.toString()}`);
+    return newTask;
   }
 
   writeTasksIntoFile(taskList: Task[]) {
@@ -99,6 +105,20 @@ export class Functions {
     }
   }
 
+  checkIfArgsAreValid(args: string[]): boolean {
+    if (args.length != 2) {
+      console.error('Unable to remove: none or too many index provided');
+      return false;
+    } else if (isNaN(parseInt(args[1]))) {
+      console.error('Unable to remove: index is not a number');
+      return false;
+    } else if (parseInt(args[1]) > this.taskList.length) {
+      console.error('Unable to remove: index is out of bound');
+      return false;
+    }
+    return true;
+  }
+
   removeCertainTask(idNum: number, taskList: Task[]): Task[] {
     let task = this.getCertainTask(idNum, taskList);
     let taskListWithRemovedElement = taskList.filter(x => x.id != task.id);
@@ -109,7 +129,7 @@ export class Functions {
   }
 
   getCertainTask(idNum: number, taskList: Task[]) {
-    let task: Task= null;
+    let task: Task = null;
     taskList.forEach(x => x.id == idNum ? task = x : 0);
   
     return task;
@@ -119,6 +139,15 @@ export class Functions {
     let counter: number = 1;
     taskList.forEach(task => task.id = counter++);
 
+    return taskList;
+  }
+
+  changeTaskIsCompletedStatus(idNum: number, taskList: Task[]): Task[] {
+    let task = this.getCertainTask(idNum, taskList);
+    task.isCompleted ? task.setIsCompleted(false) : task.setIsCompleted(true);
+    taskList.forEach(x => x.id == task.id ? task = x : 0);
+
+    console.log(`TASK STATUS CHANGED: ${task.toString()}`);
     return taskList;
   }
 }

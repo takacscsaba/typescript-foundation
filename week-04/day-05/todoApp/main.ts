@@ -13,7 +13,7 @@ if (args.length == 0) {
 } else if (args[0] == '-r') {
   functionsObj.removeTask(args);
 } else if (args[0] == '-c') {
-  
+  functionsObj.finishorUnfinishTask(args);
 } else {
   console.error('Unsupported argument, please see the supported arguments below:\n')
   functionsObj.printInformations();

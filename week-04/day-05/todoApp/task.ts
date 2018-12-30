@@ -20,4 +20,8 @@ export class Task {
     }
     return ' ';
   }
+
+  setIsCompleted(isCompleted: boolean) {
+    this.isCompleted = isCompleted;
+  }
 }
