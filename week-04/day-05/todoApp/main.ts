@@ -14,4 +14,7 @@ if (args.length == 0) {
   functionsObj.removeTask(args);
 } else if (args[0] == '-c') {
   
+} else {
+  console.error('Unsupported argument, please see the supported arguments below:\n')
+  functionsObj.printInformations();
 }
