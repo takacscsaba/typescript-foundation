@@ -30,8 +30,10 @@ export class Functions {
       let taskDescreption = args.join(' ');
       
       let taskList: Task[] = this.createTaskObjectsFromFile();
-      taskList.push(this.createTaskObjectFromArg(taskList.length, taskDescreption));
-      console.log(taskList);
+      let newTask: Task = this.createTaskObjectFromArg(taskList.length, taskDescreption)
+      taskList.push(newTask);
+
+      console.log(`NEW TASK ADDED: ${newTask.toString()}`);
 
       this.writeTasksIntoFile(taskList);
     } else {
@@ -104,7 +106,8 @@ export class Functions {
     let task = this.getCertainTask(idNum, taskList);
     let taskListWithRemovedElement = taskList.filter(x => x.id != task.id);
     this.addNewIndecesAfterRemoval(taskListWithRemovedElement);
-
+    
+    console.log(`TASK REMOVED: ${task.toString()}`);
     return taskListWithRemovedElement;
   }
 
