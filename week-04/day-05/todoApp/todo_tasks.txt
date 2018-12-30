@@ -1,3 +1,4 @@
 1 -  [X] feed the cat
 2 -  [X] feed myself
 3 -  [ ] learn TypeScript
+4 -  [ ] aludni kéne talán

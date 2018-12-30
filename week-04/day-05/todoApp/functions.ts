@@ -16,21 +16,31 @@ export class Functions {
   }
 
   printTasks() {
-    try {
-      // return fs.readFileSync(taskText, charEndcoding);
-      let taskList = this.createTaskObjFromString();
+    let taskList = this.createTaskObjectsFromFile();
 
-      if (!isNaN(taskList[0].id)) {
-        taskList.forEach(task => console.log(task.toString()));
-      } else {
-        console.log('No todos for today! :)');
-      }
-    } catch (err) {
-      throw new Error('Unable to read file: todo_tasks.txt');
+    if (!isNaN(taskList[0].id)) {
+      taskList.forEach(task => console.log(task.toString()));
+    } else {
+      console.log('No todos for today! :)');
     }
   }
 
-  createTaskObjFromString(): Task[] {
+  addTask(args: string[]) {
+    if (args.length > 2) {
+      args.shift();
+      let taskDescreption = args.join(' ');
+      
+      let taskList: Task[] = this.createTaskObjectsFromFile();
+      taskList.push(this.createTaskObjectFromArg(taskList.length, taskDescreption));
+      console.log(taskList);
+
+      this.writeTasksIntoFile(taskList);
+    } else {
+      console.log('Unable to add: no task provided')
+    }
+  }
+
+  createTaskObjectsFromFile(): Task[] {
     let taskList: Task[] = [];
     let seperatedStringTaskList = this.sliceUpTaskStrings();
 
@@ -60,6 +70,21 @@ export class Functions {
         stringTask.substring(9, stringTask.lastIndexOf('\r') != -1 ? stringTask.lastIndexOf(stringTask.slice(-1)) : stringTask.lastIndexOf((stringTask.substr(stringTask.length))))));
 
       return seperatedStringTaskList;
+    } catch (e) {
+      throw new Error('Unable to read file: todo_tasks.txt');
+    }
+  }
+
+  createTaskObjectFromArg(idNum: number, taskDescreption: string): Task {
+    return new Task(idNum + 1, false, taskDescreption);
+  }
+
+  writeTasksIntoFile(taskList: Task[]) {
+    let taskString: string = '';
+    taskList.forEach(task => task.id == taskList.length ? taskString += task.toString() : taskString += task.toString() + '\n');
+
+    try {
+      fs.writeFileSync(taskText, taskString);
     } catch (e) {
       throw new Error('Unable to read file: todo_tasks.txt');
     }
