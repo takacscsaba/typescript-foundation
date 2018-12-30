@@ -18,10 +18,13 @@ export class Functions {
   printTasks() {
     try {
       // return fs.readFileSync(taskText, charEndcoding);
-
       let taskList = this.createTaskObjFromString();
-      
-      taskList.forEach(task => console.log(task.toString()));
+
+      if (!isNaN(taskList[0].id)) {
+        taskList.forEach(task => console.log(task.toString()));
+      } else {
+        console.log('No todos for today! :)');
+      }
     } catch (err) {
       throw new Error('Unable to read file: todo_tasks.txt');
     }
@@ -31,15 +34,14 @@ export class Functions {
     let taskList: Task[] = [];
     let seperatedStringTaskList = this.sliceUpTaskStrings();
 
-    for (let i = 0; i < seperatedStringTaskList.length; i += 3) {
-      let id: number = seperatedStringTaskList[i];
-      let isCompleted: boolean = seperatedStringTaskList[i + 1] == 'X';
-      let taskDescription: string = seperatedStringTaskList[i + 2];
-
-      taskList.push(new Task(id, isCompleted, taskDescription));
-    }
-
-    return taskList;
+      for (let i = 0; i < seperatedStringTaskList.length; i += 3) {
+        let id: number = seperatedStringTaskList[i];
+        let isCompleted: boolean = seperatedStringTaskList[i + 1] == 'X';
+        let taskDescription: string = seperatedStringTaskList[i + 2];
+  
+        taskList.push(new Task(id, isCompleted, taskDescription));
+      }
+      return taskList;
   }
 
   sliceUpTaskStrings() {

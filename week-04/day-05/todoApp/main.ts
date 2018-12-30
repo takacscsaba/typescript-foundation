@@ -1,7 +1,7 @@
 import { Functions } from "./functions";
 
-const args = process.argv.splice(2); // Just a helper for you to get started
-console.log('Input params are', args);
+const args = process.argv.splice(2);
+// console.log('Input params are', args);
 const functionsObj = new Functions();
 
 if (args.length == 0) {
