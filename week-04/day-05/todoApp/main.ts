@@ -11,7 +11,7 @@ if (args.length == 0) {
 } else if (args[0] == '-a') {
   functionsObj.addTask(args);
 } else if (args[0] == '-r') {
-  
+  functionsObj.removeTask(args);
 } else if (args[0] == '-c') {
   
 }

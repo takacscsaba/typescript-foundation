@@ -6,7 +6,6 @@ const taskText = "todo_tasks.txt";
 const commandsText = "commands_information.txt";
 
 export class Functions {
-
   printInformations() {
     try {
       console.log(fs.readFileSync(commandsText, charEndcoding));
@@ -36,7 +35,22 @@ export class Functions {
 
       this.writeTasksIntoFile(taskList);
     } else {
-      console.log('Unable to add: no task provided')
+      console.error('Unable to add: no task provided')
+    }
+  }
+  
+  removeTask(args: string[]) {
+    let taskList: Task[] = this.createTaskObjectsFromFile();
+
+    if (args.length != 2) {
+      console.error('Unable to remove: none or too many index provided');
+    } else if (isNaN(parseInt(args[1]))) {
+      console.error('Unable to remove: index is not a number');
+    } else if (parseInt(args[1]) > taskList.length) {
+      console.error('Unable to remove: index is out of bound');
+    } else {
+      taskList = this.removeCertainTask(parseInt(args[1]), taskList);
+      this.writeTasksIntoFile(taskList);
     }
   }
 
@@ -51,18 +65,14 @@ export class Functions {
   
         taskList.push(new Task(id, isCompleted, taskDescription));
       }
-      return taskList;
+
+    return taskList;
   }
 
   sliceUpTaskStrings() {
     try {
       let stringTaskList: string[] = fs.readFileSync(taskText, charEndcoding).toString().split("\n");
       let seperatedStringTaskList = [];
-      
-      // stringTaskList.forEach(stringTask => console.log(
-      //   parseInt(stringTask.substring(0, 1)),  
-      //   stringTask.substring(6, 7), 
-      //   stringTask.substring(9, stringTask.lastIndexOf('\r') != -1 ? stringTask.lastIndexOf(stringTask.slice(-1)) : stringTask.lastIndexOf((stringTask.substr(stringTask.length))))));
 
       stringTaskList.forEach(stringTask => seperatedStringTaskList.push(
         parseInt(stringTask.substring(0, 1)),  
@@ -88,5 +98,27 @@ export class Functions {
     } catch (e) {
       throw new Error('Unable to read file: todo_tasks.txt');
     }
+  }
+
+  removeCertainTask(idNum: number, taskList: Task[]): Task[] {
+    let task = this.getCertainTask(idNum, taskList);
+    let taskListWithRemovedElement = taskList.filter(x => x.id != task.id);
+    this.addNewIndecesAfterRemoval(taskListWithRemovedElement);
+
+    return taskListWithRemovedElement;
+  }
+
+  getCertainTask(idNum: number, taskList: Task[]) {
+    let task: Task= null;
+    taskList.forEach(x => x.id == idNum ? task = x : 0);
+  
+    return task;
+  }
+
+  addNewIndecesAfterRemoval(taskList: Task[]) {
+    let counter: number = 1;
+    taskList.forEach(task => task.id = counter++);
+
+    return taskList;
   }
 }

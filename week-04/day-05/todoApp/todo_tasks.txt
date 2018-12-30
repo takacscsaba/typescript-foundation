@@ -2,3 +2,4 @@
 2 -  [X] feed myself
 3 -  [ ] learn TypeScript
 4 -  [ ] aludni kéne talán
+5 -  [ ] tanulni tovább
