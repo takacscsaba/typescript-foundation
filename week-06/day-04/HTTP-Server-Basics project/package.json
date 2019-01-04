@@ -1,0 +1,14 @@
+{
+  "name": "http-server-basics-project",
+  "version": "1.0.0",
+  "description": "first server task",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
