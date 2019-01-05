@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Cocktails</title>
+  </head>
+  <body>
+    <h1>Cocktails</h1>
+    <h3> ALL
+    <% alcoholList.forEach(function(alcohol){ %>
+      <%= alcohol.toUpperCase() %>
+    <% }) %>
+    </h3>
+    <ul>
+      <% cocktailList.forEach(function(cocktail){ %>
+        <li><%= cocktail.name %></li>
+      <% }) %>
+    </ul>
+  </body>
+</html>
