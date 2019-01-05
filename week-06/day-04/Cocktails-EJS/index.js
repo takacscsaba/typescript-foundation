@@ -4,6 +4,7 @@ const PORT = 3000;
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
+app.use('/static', express.static('static'));
 
 // home page
 app.get('/', (req, res) => {

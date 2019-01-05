@@ -2,26 +2,49 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cocktails</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/style.css">
   </head>
   <body>
     <h1>Cocktails</h1>
-    <h3> ALL
+    <h3 id=coctail-names> <a href='http://localhost:3000/'>ALL</a>
     <% alcoholList.forEach(function(alcohol){ %>
-      <%= alcohol.toUpperCase() %>
+      <a href='http://localhost:3000/?alcohol=<%= alcohol %>'><%= alcohol.toUpperCase() %></a>
     <% }) %>
     </h3>
-    <ul>
-      <% if (alcohol != undefined) { %>
-        <% let filteredCocktails = cocktailList.filter(cocktail => cocktail.contains.some(cont => cont == alcohol)); %>
-        <% filteredCocktails.forEach(function(cocktail){ %>
-          <li><%= cocktail.name %></li>
-        <% }); %>
-      <% } else { %>
-        <% cocktailList.forEach(function(cocktail){ %>
-          <li><%= cocktail.name %></li>
-          <% }); %>
-      <% } %>
+    <table>
+        <thead>
+          <tr>
+            <th><b>NAME</b></th>
+            <th width=200px><b>PRICE</b></th>
+          </tr>
+        </thead>
+        <tbody>
+            <% if (alcohol != undefined) { %>
+              <% let filteredCocktails = cocktailList.filter(cocktail => cocktail.contains.some(cont => cont == alcohol)); %>
+              <% filteredCocktails.forEach(function(cocktail){ %>
+                <tr>
+                    <td id=cocktail>
+                        <b><%= cocktail.name.toUpperCase() %></b> (non-alcoholic)<br>
+                        <small><%= cocktail.contains %></small>
+                    </td>
+                  <td id=price><b><%= cocktail.price %> Ft</b></td>
+                </tr>
+              <% }); %>
+            <% } else { %>
+              <% cocktailList.forEach(function(cocktail){ %>
+                <tr>
+                  <td id=cocktail>
+                    <b><%= cocktail.name.toUpperCase() %></b>
+                    <%= !cocktail.isAlcoholic ? ' (non-alcoholic)' : '' %><br>
+                    <small><%= cocktail.contains %></small>
+                  </td>
+                  <td id=price><b><%= cocktail.price %> Ft</b></td>
+                </tr>
+                <% }); %>
+            <% } %>
+        </tbody>
     </ul>
   </body>
 </html>
