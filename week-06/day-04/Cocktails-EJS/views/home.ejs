@@ -12,9 +12,16 @@
     <% }) %>
     </h3>
     <ul>
-      <% cocktailList.forEach(function(cocktail){ %>
-        <li><%= cocktail.name %></li>
-      <% }) %>
+      <% if (alcohol != undefined) { %>
+        <% let filteredCocktails = cocktailList.filter(cocktail => cocktail.contains.some(cont => cont == alcohol)); %>
+        <% filteredCocktails.forEach(function(cocktail){ %>
+          <li><%= cocktail.name %></li>
+        <% }); %>
+      <% } else { %>
+        <% cocktailList.forEach(function(cocktail){ %>
+          <li><%= cocktail.name %></li>
+          <% }); %>
+      <% } %>
     </ul>
   </body>
 </html>
