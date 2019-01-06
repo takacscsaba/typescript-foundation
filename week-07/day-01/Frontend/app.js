@@ -4,6 +4,7 @@ const app = express();
 const PORT = 8080;
 
 app.use('/assets', express.static('assets'));
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
@@ -52,6 +53,34 @@ app.get('/appenda/:appendable', (req, res) => {
     });
   } else {
     res.writeHead(404);
+  }
+});
+
+app.use(express.json());
+app.post('/dountil/:action', (req, res) => {
+  let action = req.params.action;
+  let actionNum = req.body.until;
+
+  if (action == 'sum') {
+    let sum = 0;
+    for (let i = 0; i <= actionNum; i++) {
+      sum += i;
+    }
+    res.json({
+      "result": sum
+    })
+  } else if (action == 'factor') {
+    let factor = 1;
+    for (let i = 1; i <= actionNum; i++) {
+      factor *= i;
+    }
+    res.json({
+      "result": factor
+    })
+  } else {
+    res.json({
+      "error": "Please provide a number!"
+    })
   }
 });
 
