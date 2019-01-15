@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Prime squares</title>
+      <style>
+          * {
+              box-sizing: border-box;
+              font-family: arial;
+          }
+          section {
+              display: grid;
+              grid-auto-rows: 50px;
+              grid-template-columns: repeat(10, 1fr);
+              width: 1000px;
+              margin: 0 auto;
+          }
+          section div {
+              box-shadow: 0px 0px 10px #666 inset;
+              text-align: center;
+              line-height: 50px;
+          }
+          .not-prime {
+              background: tomato;
+          }
+          .prime {
+              background: limegreen;
+          }
+      </style>
+  </head>
+  <body>
+      <section></section>
+
+      <script>
+        let mySection = document.querySelector("section");
+
+        for (let i = 1; i <= 100; i++) {
+          let myDiv = document.createElement("div");
+          myDiv.textContent = i;
+
+          mySection.appendChild(myDiv);
+        }
+
+        function primeClassAdder(element, num) {
+          if (isPrime(num)) {
+            return element.setAttribute('class', 'prime');
+          }
+            return element.setAttribute('class', 'not-prime');
+        }
+
+        function isPrime(num) {
+          for (let i = 2; i < num; i++)
+            if(num % i == 0) return false;
+          return num != 1 && num != 0;
+        }
+
+        const myDivs = document.querySelectorAll('div');
+        let counter = 0;
+
+        const primeTimer = setInterval(() => {
+          primeClassAdder(myDivs[counter], myDivs[counter].innerHTML);
+          counter++;
+
+          if (counter == myDivs.length) {
+            clearInterval(primeTimer);
+          }
+        }, 100);
+      </script>
+  </body>
+</html>
