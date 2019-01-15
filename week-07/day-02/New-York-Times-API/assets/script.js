@@ -1,11 +1,5 @@
 window.onload = () => {
-
-  const parseResponse = (response) => {
-
-    response.response.docs.forEach(element => {
-      document.body.appendChild(printArticle(element));
-    });
-  }
+  const url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=fcd23a83b3324cb4949f25b57e011623&q=civilwar";
 
   const printArticle = (article) => {
     const articleElement = document.createElement('article');
@@ -25,7 +19,11 @@ window.onload = () => {
     return articleElement;
   };
 
-  const url = "/api/newyorktimes/civilwar";
+  const parseResponse = (response) => {
+    response.response.docs.forEach(element => {
+      document.body.appendChild(printArticle(element));
+    });
+  }
 
   fetch(url)
     .then((resp) => (resp.json()))

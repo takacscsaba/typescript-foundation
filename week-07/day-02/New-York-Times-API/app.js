@@ -15,13 +15,13 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/newyorktimes/:q', (req, res) => {
-  const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=fcd23a83b3324cb4949f25b57e011623&q=${req.params.q}`;
+//   const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=fcd23a83b3324cb4949f25b57e011623&q=${req.params.q}`;
  
-fetch(url)
-  .then((resp) => (resp.json()))
-  .then(response => {
-    res.json(response);
-  });
+// fetch(url)
+//   .then((resp) => (resp.json()))
+//   .then(response => {
+//     res.json(response);
+//   });
 });
 
 app.listen(PORT, () => {
