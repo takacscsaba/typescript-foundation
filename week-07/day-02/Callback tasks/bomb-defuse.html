@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Bomb defuse</title>
+</head>
+<body>
+  <div class="display">10</div>
+  <button>Defuse</button>
+</body>
+  <script>
+    const myDisplay = document.getElementsByClassName('display');
+    const myBtn = document.querySelector('button');
+    let countDown = myDisplay[0].textContent;
+
+    const backCounter = setInterval(() => {
+      myDisplay[0].textContent = countDown - 1;
+      countDown--;
+
+      if (countDown == 0) {
+        myDisplay[0].textContent = 'Bomb exploded';
+        clearInterval(backCounter);
+      }
+    }, 1000);
+
+    document.querySelector('button').addEventListener('click', () => {
+      myDisplay[0].textContent = 'Bomb defused';
+      clearInterval(backCounter);
+    })
+  </script>
+</html>
