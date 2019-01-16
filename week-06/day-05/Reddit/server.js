@@ -13,8 +13,24 @@ let conn = mysql.createConnection ({
   database: 'reddit'
 });
 
+var query = '';
+
 app.get('/hello', (req, res) => {
-  res.send('<p>Hello world</p>')
+  res.send('<p>Hello world</p>');
+});
+
+app.get('/posts', (req, res) => {
+  query = 'SELECT * FROM post';
+  res.setHeader('Content-Type', 'application/json');
+
+  conn.query(query, (err, rows) => {
+    if (err) {
+      console.error(err.toString());
+      res.status(500).send('Database error');
+      return;
+    }
+    res.status(200).json(rows);
+  })
 });
 
 app.listen(PORT, () => {
