@@ -34,8 +34,15 @@ app.post('/posts', (req, res) => {
   query = `INSERT INTO post(title, url) 
   VALUES ('${jsonTitle}', '${jsonUrl}')`;
 
-  queryConnector(query, res);
-  res.status(201);
+  conn.query(query, (err, rows) => {
+    if (err) {
+      console.error(err.toString());
+      res.status(500).send('Database error');
+      return;
+    }
+    queryConnector(`SELECT * FROM post ORDER BY post_id DESC LIMIT 1`, res);
+    res.status(201);
+    })
 });
 
 function queryConnector(query, res) {
@@ -45,7 +52,7 @@ function queryConnector(query, res) {
     res.status(500).send('Database error');
     return;
   }
-    return res.json(rows);
+    res.json(rows);
   })
 }
 
