@@ -42,17 +42,40 @@ app.post('/posts', (req, res) => {
     }
     queryConnector(`SELECT * FROM post ORDER BY post_id DESC LIMIT 1`, res);
     res.status(201);
-    })
+  })
+});
+
+app.put('/posts/:id/upvote', (req, res) => {
+  scoreChange(req, res, '+');
+});
+
+app.put('/posts/:id/downvote', (req, res) => {
+  scoreChange(req, res, '-');
 });
 
 function queryConnector(query, res) {
   conn.query(query, (err, rows) => {
-  if (err) {
-    console.error(err.toString());
-    res.status(500).send('Database error');
-    return;
-  }
+    if (err) {
+      console.error(err.toString());
+      res.status(500).send('Database error');
+      return;
+    }
     res.json(rows);
+  })
+}
+
+function scoreChange(req, res, operator) {
+  const postId = req.params.id;
+  query = `UPDATE post SET score = score ${operator} 1 WHERE post_id = ${postId}`;
+
+  conn.query(query, (err, rows) => {
+    if (err) {
+      console.error(err.toString());
+      res.status(500).send('Database error');
+      return;
+    }
+    queryConnector(`SELECT * FROM post WHERE post_id = ${postId}`, res);
+    res.status(201);
   })
 }
 
