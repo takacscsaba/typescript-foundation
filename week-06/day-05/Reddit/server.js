@@ -1,10 +1,12 @@
 const express = require('express');
 const mysql = require('mysql');
+const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 const PORT = 3000;
 
 app.use('/assets', express.static('assets'));
+app.use(bodyParser.json());
 
 let conn = mysql.createConnection ({
   host: 'localhost',
@@ -23,15 +25,29 @@ app.get('/posts', (req, res) => {
   query = 'SELECT * FROM post';
   res.setHeader('Content-Type', 'application/json');
 
-  conn.query(query, (err, rows) => {
-    if (err) {
-      console.error(err.toString());
-      res.status(500).send('Database error');
-      return;
-    }
-    res.status(200).json(rows);
-  })
+  queryConnector(query, res);
 });
+
+app.post('/posts', (req, res) => {
+  let jsonTitle = req.body.title;
+  let jsonUrl = req.body.url;
+  query = `INSERT INTO post(title, url) 
+  VALUES ('${jsonTitle}', '${jsonUrl}')`;
+
+  queryConnector(query, res);
+  res.status(201);
+});
+
+function queryConnector(query, res) {
+  conn.query(query, (err, rows) => {
+  if (err) {
+    console.error(err.toString());
+    res.status(500).send('Database error');
+    return;
+  }
+    return res.json(rows);
+  })
+}
 
 app.listen(PORT, () => {
   console.log(`App is up and running on port ${PORT}`);
